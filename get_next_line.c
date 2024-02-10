@@ -2,7 +2,8 @@
 #include "get_next_line.h"
 
 
-/* (get_next_line)
+/* 
+    (get_next_line)
     1_ read from a fd and add to a string
     2_ extract from the stach to line
     3_ clean up stach
@@ -14,7 +15,7 @@ char *get_next_line(int fd)
     static char *buf;
     buffer = malloc(BUFFER_SIZE + 1);
     if(read(fd, &buffer,BUFFER_SIZE) == -1 || fd < 0 || BUFFER_SIZE <= 0)
-        return(ft_free_buffer(&buf,buffer,1))
+        return(ft_free_buffer(&buf,buffer,1));
 }
 char *read_and_add(int fd,char *buffer,int readed)
 {
