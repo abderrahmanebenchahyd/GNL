@@ -11,43 +11,56 @@
 
 char *get_next_line(int fd)
 {
-    char *buffer;
-    static char *buf;
+    char *holder;
+    static char *buffer;
+    int readed;
+    char finale_str;
     buffer = malloc(BUFFER_SIZE + 1);
     if(read(fd, &buffer,BUFFER_SIZE) == -1 || fd < 0 || BUFFER_SIZE <= 0)
-        return(ft_free_buffer(&buf,buffer,1));
-}
-char *read_and_add(int fd,char *buffer,int readed)
-{
-    static char *finale_str;
-    finale_str = malloc(BUFFER_SIZE + 1);
-    if(!finale_str)
-        return(NULL);
+        return(ft_free_buffer(&holder,buffer,1));
     readed = 0;
-    while(ft_find_newline(buffer))
+    while(*buffer)
     {
         readed = read(fd,buffer,BUFFER_SIZE);
         if(readed == -1 || readed == 0)
             break ;
         buffer[readed] = '\0';
-        finale_str = ft_strjoin(finale_str,buffer);
+        holder = ft_strjoin(holder,buffer);
+        if (ft_strchr(buffer,'\n') != -1)
+            break;
     }
-        free(buffer);
+    free(buffer);
 }
-int ft_find_newline(char *buffer)
+char *ft_fin_str(char *buffer,int readed)
+{
+
+}
+char *ft_holder(char *buffer, int readed)
+{
+    char *str;
+    int i;
+    i = 0;
+    str = malloc(readed + 1);
+    while(i < readed)
+    {
+        str[i] = buffer[i];
+        i++;
+    }
+}
+int ft_strchr(char *buffer, char c)
 {
     int i;
 
     i = 0;
     if(!buffer)
-        return(-1);
+        return(-2);
     while(buffer[i])
     {
-        if(buffer[i] == '\n')
-            return(0);
+        if(buffer[i] == c)
+            return(i);
         i++;
     }
-    return(1);
+    return(-1);
 }
 
 void    *ft_free_buffer(char **buf, char *buffer, int flag)
